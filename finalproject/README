@@ -1,0 +1,19 @@
+This project  is a script that is suppose to create a prototype for an online webshop for beauty products. The scripts will make it possible for the user to see a list of products and necessary information about them. 
+
+The information about the products is based on different variables in the script.
+
+Here is one example:
+
+var makeup = [
+{'product': "True Match Liquid Foundation",
+ 'label': "Loréal Paris",
+ 'price': 12.79,
+ 'coulor': "Rose Vanilla 2C",
+ 'volume': "30 ml",
+ 'url': "http://boots.scene7.com/is/image/Boots/10200787?wid=200&hei=200&op_sharpen=1"
+},
+
+Html and css have been used to design the webpage. 
+
+
+To test the script we used the http://localhost:8088/ 

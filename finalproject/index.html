@@ -1,0 +1,109 @@
+<html>
+  <head>  
+    <title>
+    
+    
+    <p><font color="white">
+
+    Makeup Store
+    
+    </font></p>
+
+    
+    </title> 
+    <style>
+      /* CSS Styling */
+      #frame {
+        width: 100%;
+      }
+      #inputs {
+        width: 30em;
+      }
+      .makeup {
+        padding: 30px;
+        border-bottom: 10px double pink;
+      }
+      #makeup {
+        width: 30em;
+      }
+      .title_style {
+        font-weight: bold;
+        font-size: 120;
+        font-color: grey;
+        font-family: arial black;
+      }
+    </style>
+    <!-- SCRIPTS -->
+    <!-- import handlebars -->    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <!-- import jquery -->    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>       
+  </head>
+  <body>    
+    <!-- HTML -->
+    <label>
+    <p><font face="Courier New" color="lightgrey" size=15><center>MAKEUP STORE</center></font></p>
+      
+      <p><font face="arial" color="pink" size="5">Welcome to this webshop. <br> Hope you find what you need. <br>Please press the button to view our products.</font></p><br>
+      
+    </label>
+    <div id="frame">
+
+      <div id="inputs">
+        <input type="button" value="View products" onclick="get_makeup();"/>
+        
+      </div>
+
+      
+      <div id="makeup">
+        <script id="makeup-template" type="text/x-handlebars-template">
+          {{#each this}}
+          
+          <div class="makeup">
+            <div class="product_style">Product: {{product}}</div>
+            <div class="label_style">Label: {{label}}</div>
+            <div class="price_style">Price: {{price}}</div>
+            <div class="colour_style">Coulor: {{coulor}}</div>
+            <div class="volume_style">Volume: {{volume}}</div>
+            <br> 
+            <div class="volume_style"><img src={{url}} /></div>
+            
+          </div>
+          {{/each}}
+        </script>
+      </div>
+      
+      
+
+
+    </div>    
+
+    <!-- SCRIPTS -->
+    <!-- import socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // connect to localhost on its port (see server.js -- 8088)
+      var socket = io().connect('http://localhost:8088');
+      // when connecting 
+      socket.on('connect', function (data) {
+        console.log('connected');
+      });
+      // when receiving a custom message form the server
+      socket.on('all the makeup we have', function(msg) {
+        console.log('all the makeup: ' + JSON.stringify(msg));
+        compile_results_and_display(msg);
+      });
+      function get_makeup() {
+        socket.emit('give some makeup', "nothing");
+      }
+      
+      function compile_results_and_display(results) {
+        var template_script = $("#makeup-template").html(); 
+      var template = Handlebars.compile(template_script);
+      //$('.book').remove();
+      $('#makeup').append(template(results));
+      }
+
+    </script>   
+  </body>
+</html>
